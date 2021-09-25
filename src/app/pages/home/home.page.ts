@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators} from '@angular/forms';
+import { Store } from '@ngrx/store';
+
+import * as fromHomeActions from './state/home.actions';
 
 @Component({
   selector: 'jv-home',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  searchControl: FormControl;
 
-  ngOnInit(): void {
+  constructor( private store: Store ) { 
+  }
+
+  ngOnInit(){
+    this.searchControl = new FormControl('', Validators.required);
+  }
+
+  doSearch(){
+    const text = this.searchControl.value;
+    this.store.dispatch(fromHomeActions.changeText({text}));
   }
 
 }
