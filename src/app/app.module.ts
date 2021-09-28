@@ -11,6 +11,9 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentsModule } from './shared/components/components.module';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { reducers } from './shared/state/app.reducer';
+import { CustomRouterSerializer } from './shared/state/router/router.reducer';
 
 @NgModule({
   declarations: [
@@ -22,9 +25,10 @@ import { ComponentsModule } from './shared/components/components.module';
     HttpClientModule,
     HomeModule,
     BookmarksModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({ serializer: CustomRouterSerializer}),
   ],
   providers: [],
   bootstrap: [AppComponent]
