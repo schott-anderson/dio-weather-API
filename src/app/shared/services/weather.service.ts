@@ -15,14 +15,15 @@ export class WeatherService {
    }
  
   getCityWeatherByQuery(query: string): Observable<CityWeather>{
-    const params = new HttpParams ({ fromObject: {q: query}});
-    return this.doGet('weather', params)
+    const params = new HttpParams({ fromObject:{q: query}});
+    return this.doGet<any>('weather', params)
     .pipe(map(response => responseToCityWeather(response)));
   }
 
   private doGet<T>(url: string, params: HttpParams): Observable<T>{
     params = params.append('appid',environment.apiKey);
     params = params.append('lang', 'pt_br');
-    return this.http.get<T>('api.openweathermap.org/data/2.5/${ url}',{params }); 
+    console.log(url);
+    return this.http.get<T>(`https://api.openweathermap.org/data/2.5/${url}`,{ params }); 
   }
 }
