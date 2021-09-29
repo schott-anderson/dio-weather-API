@@ -4,5 +4,5 @@ export class Bookmark{
     id: number;
     coord: Coord;
     name: string;
-    contry: string;
+    country: string;
 }
