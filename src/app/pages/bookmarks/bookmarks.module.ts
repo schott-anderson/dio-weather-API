@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { BookmarksEffects } from './state/bookmarks.effects';
+import { ComponentsModule } from 'src/app/shared/components/components.module';
 
 
 
@@ -18,6 +19,7 @@ import { BookmarksEffects } from './state/bookmarks.effects';
     ReactiveFormsModule,
     StoreModule.forFeature('bookmarks', bookmarkReducer),
     EffectsModule.forFeature([BookmarksEffects]),
+    ComponentsModule,
   ]
 })
 export class BookmarksModule { }

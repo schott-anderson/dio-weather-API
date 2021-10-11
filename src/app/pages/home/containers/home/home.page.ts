@@ -9,6 +9,7 @@ import * as fromHomeActions from 'src/app/pages/home/state/home.actions';
 import * as fromHomeSelectors from 'src/app/pages/home/state/home.selectors';
 import { map, takeUntil } from 'rxjs/operators';
 import * as fromBookmarksSelectors from 'src/app/pages/bookmarks/state/bookmarks.selectors';
+import { CityTypeaheadItem } from 'src/app/shared/models/city-typeahead-item.model';
 
 @Component({
   selector: 'jv-home',
@@ -36,6 +37,14 @@ export class HomePage implements OnInit, OnDestroy {
   ngOnInit(){
     this.searchControl = new FormControl('', Validators.required); 
     this.searchControlWithAutocomplete = new FormControl(undefined);
+
+    this.searchControlWithAutocomplete.valueChanges
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((value: CityTypeaheadItem) => {
+        if (!!value) {
+          this.store.dispatch(fromHomeActions.loadCurrentWeatherById({id: value.geonameid.toString()}));
+        }
+      });
 
     this.cityWeather$ = this.store.pipe(select(fromHomeSelectors.selectCurrentWeather));
     this.cityWeather$
