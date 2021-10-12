@@ -13,6 +13,8 @@ import { CityTypeaheadItem } from 'src/app/shared/models/city-typeahead-item.mod
 import { ComponentPortal, DomPortalOutlet, PortalOutlet } from '@angular/cdk/portal';
 import { componentFactoryName } from '@angular/compiler';
 import { UnitSelectorComponent } from '../unit-selector/unit-selector.component';
+import { Units } from 'src/app/shared/models/units.enum';
+import * as fromConfigSelectors from '../../../../shared/state/config/config.selectors';
 
 @Component({
   selector: 'jv-home',
@@ -31,6 +33,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   bookmarksList$: Observable<Bookmark[]>;
   isCurrentFavorite$: Observable<boolean>;
+
+  unit$: Observable<Units>;
 
   private componentDestroyed$ = new Subject();
 
@@ -72,6 +76,8 @@ export class HomePage implements OnInit, OnDestroy {
           return false;
         }),
       );
+      
+      this.unit$ = this.store.pipe(select(fromConfigSelectors.selectUnitConfig))
 
       this.setupPortal();
   }
